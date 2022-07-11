@@ -1,5 +1,5 @@
 # serverless.yml
-service: copy-csv-to-postgres
+service: lambda
 provider:
   name: aws
   region: us-east-2
@@ -7,13 +7,14 @@ provider:
 functions:
   copy-csv-to-postgres:
     # this is formatted as <FILENAME>.<HANDLER>
+    # handler: index.handler
     handler: dist/index.handler
     events:
-      # - test: '{"bucket": "zip-unzip-bucket", "fileKey": "property_100.csv", "resetDb": false}'
-      - http:
-          path: /
-          method: post
-          cors: true
+      - test: '{"bucket": "zip-unzip-bucket", "fileKey": "property_100.csv", "resetDb": false}'
+      # - http:
+      #     path: /
+      #     method: post
+      #     cors: true
       # - http:
       #     path: /
       #     method: get

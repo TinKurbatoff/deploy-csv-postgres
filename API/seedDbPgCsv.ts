@@ -115,8 +115,10 @@ async function deployDataToDB(client: Pool, bucket: string, fileKey: string, res
             })
 
         fileStream.on('progress', async (progress: number) => {
-            console.log(`progress: ${(progress/ 1024 / 1024).toFixed(3)} Mb`)
+            let stateString = `progress: ${(progress/ 1024 / 1024).toFixed(3)} Mb`
+            console.log(stateString)
             await updateStateDb(poolClient, 'progress', progress) // Update state in DB
+            insertResult = stateString;
             })
 
         fileStream.on('error', (err: any) => {
@@ -138,13 +140,15 @@ async function deployDataToDB(client: Pool, bucket: string, fileKey: string, res
             console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
             // poolClient.end()
             // pool.end()
-            return {result: insertResult}
+            return { statusCode: 200, body: JSON.stringify(insertResult), };
             })
             
         // Connect streams to each other
-        fileStream.pipe(stream)        
+        await fileStream.pipe(stream)        
         await updateStateDb(poolClient, 'on_data_update', 'false') // Update state in DB
-        return {result: insertResult}
+            .then(async () => {await updateStateDb(poolClient, 'dumb_state', 'empty')})
+            .then(() => {return { statusCode: 200, body: JSON.stringify(insertResult), }}) // Update state in DB
+        return { statusCode: 200, body: JSON.stringify(insertResult), }
 }
 
 

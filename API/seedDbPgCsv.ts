@@ -132,6 +132,7 @@ async function deployDataToDB(client: Pool, bucket: string, fileKey: string, res
         stream.on('finish', async () => {
             console.log("*STREAM FINISHED*");
             await updateStateDb(poolClient, 'on_data_update', 'false') // Update state in DB
+            await updateStateDb(poolClient, 'row_count', stream.rowCount) // Update state in DB
             let timeElapsed = (performance.now() - startTime) / 1000  // convert ms to seconds
             insertResult = `Inserted ${stream.rowCount} lines | took ${timeElapsed.toFixed(6)} s | csv_read_all:${fileFromPath}`
             console.log(insertResult) 

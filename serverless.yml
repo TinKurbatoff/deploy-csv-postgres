@@ -1,0 +1,18 @@
+# serverless.yml
+service: post-address-data
+provider:
+  name: aws
+  runtime: nodejs14.x
+functions:
+  runApi:
+    # this is formatted as <FILENAME>.<HANDLER>
+    handler: dist/runApi.handler
+    events:
+    - http:
+        path: /
+        method: post
+        cors: true
+    - http:
+        path: /
+        method: get
+        cors: true

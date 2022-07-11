@@ -1,18 +1,18 @@
 # serverless.yml
-service: post-address-data
+service: copy-csv-to-postgres
 provider:
   name: aws
   runtime: nodejs14.x
 functions:
   runApi:
     # this is formatted as <FILENAME>.<HANDLER>
-    handler: dist/runApi.handler
+    handler: dist/seedDbPgCsv.handler
     events:
-    - http:
-        path: /
-        method: post
-        cors: true
-    - http:
-        path: /
-        method: get
-        cors: true
+    # - http:
+    #     path: /
+    #     method: post
+    #     cors: true
+    # - http:
+    #     path: /
+    #     method: get
+    #     cors: true

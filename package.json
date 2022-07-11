@@ -27,12 +27,9 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "start": "ts-node ./index.ts",
-    "seed": "ts-node ./API/seedDbPgCsv.ts",
-    "local": "ts-node ./API/copyRunApi.ts --outfile=dist/runApi.js",
-    "postlocal": "cp dist/runApi.js API/ ",
+    "start": "ts-node ./API/seedDbPgCsv.ts",
     "prebuild": "rm -rf dist",
-    "build": "esbuild ./API/runApi.ts --bundle --minify --sourcemap --platform=node --external:aws-sdk --target=es2019 --outfile=dist/runApi.js",
-    "postbuild": "cp dist/runApi.js API/ && cd dist && zip -r graphql.zip runApi.js* ../API/aws-config.json"
+    "build": "esbuild ./API/seedDbPgCsv.ts --bundle --minify --sourcemap --platform=node --external:aws-sdk --target=es2019 --outfile=dist/seedDbPgCsv.js",
+    "postbuild": "cp dist/seedDbPgCsv.js API/ && cd dist && zip -r seedDbPgCsv.zip seedDbPgCsv.js* ../API/aws-config.json"
   }
 }

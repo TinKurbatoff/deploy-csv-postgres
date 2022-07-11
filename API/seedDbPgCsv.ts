@@ -119,68 +119,7 @@ async function deployDataToDB(client: Pool, bucket: string, fileKey: string) {
         // Connect streams to each other
         fileStream.pipe(stream)
         return
-    // })
 }
-
-
-// ——————————————————————————————————————————————————————————————————————————————
-// ——————————————————————————————————————————————————————————————————————————————
-// ——————————————————————————————————————————————————————————————————————————————
-// app.get('/', async function (req: Request, res: Response ) {
-//     res.send('You successfully called GET function!')
-//   })
-  
-// app.post('/', async function (req: Request, res: Response ) {
-//     // console.log(await req._read)
-//     // EXAMPLE
-    
-//     try { 
-//       let dataJson = JSON.parse(req.apiGateway.event.body)
-//       // let destWriteStream = fs.createWriteStream("/tmp/a.csv");
-//       // console.log(Object.keys(dataJson))
-//       console.log(dataJson)
-//       let s3 = new aws.S3({apiVersion: '2006-03-01'});
-//       aws.config.update({region: 'us-east-2'});
-//       let bucketUri = "zip-unzip-bucket"
-//       let fileFromPath = dataJson?.data_location //"property_100.csv"
-//       fileFromPath = "/Users/banknote/Downloads/property/property.csv"
-//       console.log(`posted fileName:${fileFromPath}`)
-//       let fileS3Name = fileFromPath.split("/").pop() || "undefined_file_name"
-//       let pathS3bucket = "unziped/"
-//       console.log(`overrided fileName:${fileFromPath}`)
-//       let objParams = {Bucket: bucketUri, Key: pathS3bucket + fileFromPath || "property_100.csv"};
-//       let startTime = performance.now()
-//       await deployDataToDB(pool, bucketUri, fileFromPath) // , bucketUri, pathS3bucket, fileS3Name)
-//       let timeElapsed = (performance.now() - startTime) / 1000  // convert ms to seconds
-//       console.log(`Finished in ${timeElapsed.toFixed(6)} s`) 
-  
-//       // var file = require('fs').createWriteStream('file.jpg');
-//       let x = 0;
-//       //https://trusty-dev-test.s3.us-west-2.amazonaws.com/property.zip
-  
-//       /* Saving to Databse */
-//       // s3.getObject(objParams).createReadStream()
-//       //     .pipe(parse({ delimiter: ",", from_line: 1 }))
-//       //     .on("data", async function (row) {    
-//       //       if (x % 1000 == 0) {console.log(x, row.length);}
-//       //       x++;
-//       //       })
-//       //     .on("error", function (error) {
-//       //         console.error(`Error on x:${x} line`)
-//       //         console.error(error.message);
-//       //         return res.json({status: "FAIL", message: error.message});
-//       //       })
-//       // * EXAMPLE 
-//       //console.log(JSON.parse(req.apiGateway.event.body))
-//       return res.json(dataJson)
-//       }
-//     catch(error) {
-//       console.error(error.message)
-//       return res.json({status: "FAIL", message: error.message});
-//       }  
-//   })
-  
-//   exports.handler = serverless(app);
 
 
 exports.handler = async (event: any, context: any) => {
@@ -196,4 +135,4 @@ exports.handler = async (event: any, context: any) => {
     };
     return response;
 };
-  
+process.exit(0)

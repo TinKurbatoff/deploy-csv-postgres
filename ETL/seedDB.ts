@@ -1,10 +1,10 @@
 import { dbHandlerClass } from './databaseHandler';
 import type { Pool, PoolClient } from 'pg';
-require('dotenv').config();
+// require('dotenv').config();  // Not used anymore **DEBUG ONLY**
 
 /* —————————————————————- SEED DATABASE QUESRIES  ——————————————————— */
-let queryStringDrop = `DROP TABLE  $tableName;`;
-let queryStringDropState = `DROP TABLE system_states;`;
+let queryStringDrop = `DROP TABLE IF EXISTS  $tableName;`;
+let queryStringDropState = `DROP TABLE IF EXISTS system_states;`;
 let postgresFunction = `CREATE OR REPLACE FUNCTION trigger_set_timestamp() RETURNS TRIGGER AS $$
                         BEGIN
                             NEW.updated_at = NOW();
@@ -59,14 +59,14 @@ let queryStringCreateMainTable = `CREATE TABLE IF NOT EXISTS $tableName (
                                 );`;
 
 
-export async function seedDatabase(pool: Pool | PoolClient, tableName: string): Promise<string> {
+export async function seedDatabase(pool: Pool | PoolClient, tableName: string, resetDb: boolean): Promise<string> {
     /* Creates Database  */
         console.log(`☀️ CREATE TABLE: "${tableName}"`)  // ** Sanity check **
-        if (process.env.START_DROP_TABLES === "True") {
+        if (resetDb) {
             // If DROP is enabled in .ENV file
             for (let _queryStringDrop of [queryStringDrop, queryStringDropState]) {
                 _queryStringDrop = _queryStringDrop.replace("$tableName", tableName);
-                // console.log(`DROP DB Q:${_queryStringDrop} — DB:${tableName}`); // ** Sanity check **
+                console.log(`DROP DB Q:${_queryStringDrop} — DB:${tableName}`); // ** Sanity check **
                 let result = await dbHandlerClass.queryPool(pool, _queryStringDrop, []);
                 console.log(`⚠️ DROP TABLE RESULT:>${result[0].toString()}`); }
         }

@@ -71,7 +71,6 @@ export async function createAWSStream(s3: any, bucket: string, fileKey: string, 
             Bucket: bucket,
             Key: fileKey
         }
-
         try {
             s3.headObject(bucketParams, (error: any, data: any) => {
                 if (error) {
@@ -82,10 +81,10 @@ export async function createAWSStream(s3: any, bucket: string, fileKey: string, 
                 // We have everything we need to instantiate our SmartStream class
                 // If you want to pass ReadableOptions to the Readable class, you pass the object as the fourth parameter
                 const stream = new SmartStream(bucketParams, s3, data.ContentLength, chunkSize);
-
                 resolve(stream);
             });
         } catch (error) {
+            console.error(error.message)
             reject(error)
         }
     });

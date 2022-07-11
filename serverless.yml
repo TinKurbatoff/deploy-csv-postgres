@@ -2,17 +2,19 @@
 service: copy-csv-to-postgres
 provider:
   name: aws
+  region: us-east-2
   runtime: nodejs14.x
 functions:
-  runApi:
+  copy-csv-to-postgres:
     # this is formatted as <FILENAME>.<HANDLER>
-    handler: dist/seedDbPgCsv.handler
+    handler: dist/index.handler
     events:
-    # - http:
-    #     path: /
-    #     method: post
-    #     cors: true
-    # - http:
-    #     path: /
-    #     method: get
-    #     cors: true
+      # - test: '{"bucket": "zip-unzip-bucket", "fileKey": "property_100.csv", "resetDb": false}'
+      - http:
+          path: /
+          method: post
+          cors: true
+      # - http:
+      #     path: /
+      #     method: get
+      #     cors: true

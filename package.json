@@ -29,7 +29,7 @@
   "scripts": {
     "start": "ts-node ./API/seedDbPgCsv.ts",
     "prebuild": "rm -rf dist",
-    "build": "esbuild ./API/seedDbPgCsv.ts --bundle --minify --sourcemap --platform=node --external:aws-sdk --target=es2019 --outfile=dist/seedDbPgCsv.js",
-    "postbuild": "cp dist/seedDbPgCsv.js API/ && cd dist && zip -r seedDbPgCsv.zip seedDbPgCsv.js* ../API/aws-config.json"
+    "build": "esbuild ./API/seedDbPgCsv.ts --bundle --minify --sourcemap --platform=node --external:aws-sdk --target=es2019 --outfile=dist/index.js",
+    "postbuild": "cp dist/index.js API/ && cp ./aws-config.json dist/ && cd dist && zip -r seedDbPgCsv.zip index.js* aws-config.json"
   }
 }
